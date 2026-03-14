@@ -1,0 +1,721 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* transition: all 1.4s ease; */
+    background-color: #ffd1d1;
+    
+    position: relative;
+    overflow: hidden;
+}
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    background: linear-gradient(160deg,#020111 10%, #050625 35%, #2d2e41 70%, #040509 100%);
+
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+
+}
+
+body.night-mode::before {
+    opacity: 1;
+}
+    
+
+/* Головний контейнер */
+
+.app {
+    width: 100%;
+    max-width: 420px;
+    /* height: 100vh; */
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Екрани */
+
+.screen {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+    -webkit-font-smoothing: antialiased;
+
+    opacity: 1;
+    transition:
+            opacity 0.5s ease,
+            transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    transform: translateY(0);
+}
+
+.hidden {
+    display: none !important;
+    opacity: 0;
+    pointer-events: none;
+    transition: display 0.5s allow-discrete, opacity 0.5s ease;
+}
+
+
+/* для плавної появи після display: none */
+@starting-style {
+
+    .screen:not(.hidden) {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+/* Сердечко */
+
+.heart {
+    user-select: none;
+    /* width: 200px; */
+    width: min(200px, 50vw);
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    transition: transform 0.15s ease, filter 0.3s ease;
+    filter: drop-shadow(0 0 10px rgba(255, 70, 100, 0.4));
+    animation: heartbeat 4s ease-in-out infinite;
+}
+
+.heart:active {
+    animation: none;
+    transform: scale(0.95);
+    filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+}
+
+/* текст у серці */
+
+.heart-text {
+    fill: white;
+    font-size: 18px;
+    text-anchor: middle;
+    dominant-baseline: text-after-edge;
+    font-weight: bold;
+}
+
+@keyframes heartbeat {
+
+    0% {
+        transform: scale(1);
+    }
+
+    14% {
+        transform: scale(1.08);
+    }
+
+    28% {
+        transform: scale(1);
+    }
+
+    42% {
+        transform: scale(1.08);
+    }
+
+    70% {
+        transform: scale(1);
+    }
+
+}
+
+/* меню */
+
+.menu-title, .wishes24-title, .she-title, .greeting-title {
+    font-size: 24px;
+    margin-bottom: 25px;
+    text-align: center;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.menu-btn {
+    width: 200px;
+    padding: 15px;
+    margin: 8px;
+    border: none;
+    border-radius: 10px;
+    background: #ff4d6d;
+    color: white;
+    font-size: 16px;
+    transition: all 0.4s ease;
+}
+
+.menu-btn:active, .quiz-answers button:active, .lastWishBtn:active {
+    background-color: #984dff;
+}
+
+.menu-btn:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* кнопка назад */
+
+.back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #4f4f4f;;
+    cursor: pointer;
+    font-weight: bold;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    /* transition: 0.2s ease; */
+}
+
+.back:active { color: #000000; }
+
+#moonBtn, #sunBtn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 25px;
+    filter: grayscale(100%) brightness(1.5);
+    /* filter: grayscale(100%) brightness(50%) contrast(150%); */
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    transition: all 0.2s ease;
+}
+
+#moonBtn {
+    opacity: 0;
+}
+
+
+/* quiz  */
+
+.quiz-container {
+    width: 90%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.quiz-question {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.quiz-answers button, .lastWishBtn {
+    user-select: none;
+    -webkit-user-select: none;
+    width: 100%;
+    max-width: 300px;
+    margin: 6px 0;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #ff4d6d;
+    color: white;
+    font-size: 15px;
+    transition: all 0.4s ease;
+}
+
+.quiz-result {
+    margin: 15px 0;
+    font-weight: bold;
+    color: #333;
+}
+
+/* картка підсумку */
+
+#wishesCard {
+    position: relative;
+    padding-left: 5px;
+    width: 100%;
+    max-width: 340px;
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 20px;
+    margin-top: 25px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+
+    scrollbar-width: thin;
+    scrollbar-color: #ffb7c5 transparent;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* текст у картці */
+
+.wishesText {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    max-height: 160px;
+    overflow-y: auto;
+    padding-right: 2px;
+    padding-bottom: 10px;
+}
+
+#wishesCard {
+    animation: cardAppear 0.4s ease;
+}
+
+@keyframes cardAppear {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+#wishes24Screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#wishCardContainer {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+.wish-number {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.wish24-card {
+    width: 90%;
+    max-width: 300px;
+    background: #ffeaea;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(20px);
+    opacity: 0;
+    transition:
+            opacity 0.5s ease,
+            transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.wish24-card.show {
+    /* display: block; */
+    transform: translateY(0);
+    opacity: 1;
+}
+
+
+
+
+
+/* (картки) */
+
+.she-hint {
+    margin-top: 50px;
+    opacity: 0.35;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* контейнер стеку */
+
+.she-cards {
+    position: relative;
+    width: 260px;
+    height: 340px;
+}
+
+/* картка */
+
+.she-card {
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    position: absolute;
+    inset: 0;
+
+    border-radius: 16px;
+    overflow: hidden;
+
+    box-shadow: 13px 12px 11px 0px rgb(118 118 118 / 6%);
+
+    cursor: pointer;
+
+    touch-action: none;
+
+    transition:
+        transform .35s ease,
+        opacity .35s ease;
+}
+
+/* фото */
+
+.she-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ефект натискання */
+
+.she-card:active {
+    transform: scale(.97);
+}
+
+/* свайп вправо */
+
+.swipe-right {
+    transform: translateX(520px) rotate(25deg);
+    opacity: 0;
+}
+
+/* свайп вліво */
+
+.swipe-left {
+    transform: translateX(-520px) rotate(-25deg);
+    opacity: 0;
+}
+
+/* управління музикою */
+
+.music-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    /* background: rgba(255, 255, 255, 0.2); */
+    background: rgb(255 255 255 / 24%);
+    box-shadow: 11px -1px 13px 0px #bebebe17;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    margin-bottom: 20px;
+}
+
+.music-btn {
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    background: none;
+    border: 2px solid white;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s ease;
+}
+
+.music-btn:active {
+    /* background: rgb(52, 52, 52); */
+    color: black;
+}
+
+/* Стиль повзунка гучності */
+#volumeSlider {
+    -webkit-appearance: none;
+    width: 100px;
+    height: 4px;
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+/* ( привітання) */
+
+.greeting-container {
+    position: relative;
+    width: 85%;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 25px;
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 80vh;
+}
+
+.greeting-container::after, #wishesCard::after {
+    content: '';
+    position: absolute;
+    left: 25px;
+    right: 25px;
+    height: 30px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8));
+    pointer-events: none;
+    z-index: 5;
+}
+
+.greeting-container::after {
+    bottom: 85px;
+}
+
+#wishesCard::after {
+    bottom: 10px;
+}
+
+#finalGreetingScrollBox {
+    width: 100%;
+    border-radius: 3px;
+    overflow-y: auto;
+    padding-right: 5px;
+    margin: 15px 0;
+    text-align: left;
+
+    scrollbar-width: thin;
+    scrollbar-color: #ffb7c5 transparent;
+    -webkit-overflow-scrolling: touch;
+}
+
+#finalGreetingScrollBox::-webkit-scrollbar, #wishesCard::-webkit-scrollbar {
+    width: 4px;
+}
+
+#finalGreetingScrollBox::-webkit-scrollbar-thumb, #wishesCard::-webkit-scrollbar-thumb {
+    background: #ffb7c5;
+    border-radius: 10px;
+}
+
+#finalGreetingText {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333;
+    white-space: pre-line;
+    padding-bottom: 10px;
+    text-align: left;
+}
+
+/* Стиль сердечок */
+.rain-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.floating-rain {
+    position: absolute;
+    bottom: -50px;
+    font-size: 20px;
+    animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+    }
+}
+
+.star-title {
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: opacity 1s ease;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+
+/* cloud */
+
+.cloud-wrapper {
+    position: absolute;
+    top: 60px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.3s ease;
+    background: none;
+    border: none;
+    opacity: 0;
+}
+
+.cloud-wrapper:active {
+    transform: scale(0.9);
+}
+
+.cloud-icon {
+    line-height: 1;
+    position: relative;
+    font-size: 7rem;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+    animation: cloudFloat 3s ease-in-out infinite;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+@keyframes cloudFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.falling-word {
+    position: absolute;
+    top: 168px;
+    /* Поява прямо під хмаркою */
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.702);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+    animation: fallDown 2.5s ease-in forwards;
+}
+
+@keyframes fallDown {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(150px);
+        /* Відстань падіння */
+        opacity: 0;
+    }
+}
+
+
+
+/* rotate */
+
+
+#rotate-message {
+    position: fixed;
+    inset: 0;
+    background: rgb(0 0 0 / 62%);
+    color: white;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+    z-index: 9999;
+    padding: 20px;
+    box-sizing: border-box;
+    flex-direction: column;
+}
+
+.imgRotate {
+    width: 80px;
+    margin-top: 38px;
+}
+
+@media (pointer: coarse) and (orientation: landscape) {
+    #rotate-message {
+        display: flex;
+    }
+}
+
+@media (pointer: coarse) and (orientation: portrait) {
+    #rotate-message {
+        display: none;
+    }
+}
+
+
+/* літаючи средешки */
+
+
+.flying-heart {
+
+    position: absolute;
+
+    font-size: 18px;
+
+    pointer-events: none;
+
+    animation: flyHeart 1s ease-out forwards;
+
+}
+
+@keyframes flyHeart {
+
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(var(--x), var(--y)) scale(0.5);
+        opacity: 0;
+    }
+
+}
