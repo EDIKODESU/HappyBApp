@@ -4,7 +4,6 @@ import { createRain } from "./rain.js"
 
 export function initStars() {
     const sunBack = document.getElementById("sunBtn");
-    // const heartsBg = document.getElementById("hearts-bg");
     const rainBg = starsScreen.querySelector(".rain-bg");
 
     function renderStarScreen() {

@@ -5,8 +5,8 @@ import { menu, sheBtn, sheScreen, greetingBtn } from "./valueScreen.js";
 export function initSheCards() {
     const sheBack = document.getElementById("sheBack");
     const sheCards = document.getElementById("sheCards");
-    const sheTitle = sheScreen.querySelector(".she-title"); // Беремо заголовок
-    const sheHint = sheScreen.querySelector(".she-hint");   // Беремо підказку
+    const sheTitle = sheScreen.querySelector(".she-title");
+    const sheHint = sheScreen.querySelector(".she-hint");   
     const volumeSlider = document.getElementById("volumeSlider");
     const playPauseBtn = document.getElementById("playPauseBtn");
     const restartMusicBtn = document.getElementById("restartMusicBtn");
@@ -30,27 +30,23 @@ export function initSheCards() {
         createCards();
         
         // Налаштовуємо музику
-        music.currentTime = 0; // Починаємо пісню спочатку при кожному вході
+        music.currentTime = 0; 
         music.volume = parseFloat(volumeSlider.value) || 0.3;
         music.play();
         
-        playPauseBtn.innerHTML = "⏸";
+        playPauseBtn.innerHTML = `<img src="./img/pause.svg" alt="pause">`;
 
         showScreen(sheScreen);
     }
 
     function clearSheScreenState() {
         isFinalShowing = false;
-        // Видаляємо відрендерену картку побажань
         deleteRenderWishesCard();
         
-        // Видаляємо кнопку "Повернутися", якщо вона існує
         const existingBtn = sheScreen.querySelector(".lastWishBtn");
         if (existingBtn) existingBtn.remove();
         
-        // Показуємо заголовок та підказку назад (готуємо до нового циклу)
         sheCards.style.display = "block";
-        // sheTitle.style.display = "block";
         sheHint.style.display = "block";
         sheCards.innerHTML = ""; 
         currentCardIndex = 0;
@@ -91,7 +87,6 @@ export function initSheCards() {
             if (!isDragging) return;
             currentX = e.touches[0].clientX - startX;
             
-            // Коефіцієнт 0.3 робить рух менш чутливим (плавнішим)
             const rotate = currentX * 0.03; 
             card.style.transform = `translateX(${currentX}px) rotate(${rotate}deg)`;
         });
@@ -105,7 +100,7 @@ export function initSheCards() {
                 const dir = currentX > 0 ? "right" : "left";
                 removeCard(card, dir);
             } else {
-                // Повернення картки стало ще повільнішим (0.6s)
+                // Повернення картки
                 card.style.transition = "transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
                 card.style.transform = `rotate(${Math.random() * 4 - 2}deg)`;
             }
@@ -122,7 +117,7 @@ export function initSheCards() {
 
     function removeCard(card, dir) {
         // Уповільнили виліт картки до 0.8с
-        card.style.transition = "transform 0.8s ease-in, opacity 0.8s ease"; 
+        card.style.transition = "transform 0.6s ease-in, opacity 0.6s ease"; 
         const moveOut = dir === "right" ? 1000 : -1000;
         card.style.transform = `translateX(${moveOut}px) rotate(${dir === "right" ? 35 : -35}deg)`;
         card.style.opacity = "0";
@@ -132,7 +127,7 @@ export function initSheCards() {
         setTimeout(() => {
             card.remove();
             if (currentCardIndex === images.length && !isFinalShowing) {
-                isFinalShowing = true; // Блокуємо повторні виклики
+                isFinalShowing = true; 
                 showFinalMessage();
         }
         }, 800);
@@ -141,13 +136,11 @@ export function initSheCards() {
     function showFinalMessage() {
         // Ховаємо все зайве
         sheCards.style.display = "none";
-        // sheTitle.style.display = "none";
         sheHint.style.display = "none";
 
         const wishtext = "Лєр, яка ти гарнетка. Ти секс. Виглядає чудово. Твоя фігура, очі, руки, ноги, вуста, - я люблю кожну частинку тебе ❤️" +
             "Не уявляю, що хтось може перекрити таку Ланітову. Така дівчина не підлягає ніякому оцінюванню, занадто гарнюня. І такою будеш і надалі. Мій висновок: обої на телефон з тобою найкрасивіші";
 
-        // Використовуємо твій метод рендеру
         renderWishesCard(wishtext, sheTitle);
 
         const lastbtn = document.createElement("button");
@@ -169,17 +162,17 @@ export function initSheCards() {
     playPauseBtn.onclick = () => {
         if (music.paused) {
             music.play();
-            playPauseBtn.innerHTML = "⏸";
+            playPauseBtn.innerHTML = `<img src="./img/pause.svg" alt="pause">`;
         } else {
             music.pause();
-            playPauseBtn.innerHTML = "▶";
+            playPauseBtn.innerHTML = `<img src="./img/start.svg" alt="pause">`;
         }
     };
 
     restartMusicBtn.onclick = () => {
         music.currentTime = 0;
         music.play();
-        playPauseBtn.innerHTML = "⏸";
+        playPauseBtn.innerHTML = `<img src="./img/pause.svg" alt="pause">`;
     };
 
     volumeSlider.oninput = () => {

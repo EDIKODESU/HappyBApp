@@ -12,7 +12,6 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    /* transition: all 1.4s ease; */
     background-color: #ffd1d1;
     
     position: relative;
@@ -44,7 +43,6 @@ body.night-mode::before {
 .app {
     width: 100%;
     max-width: 420px;
-    /* height: 100vh; */
     height: 100%;
     overflow: hidden;
     display: flex;
@@ -85,7 +83,6 @@ body.night-mode::before {
 }
 
 
-/* для плавної появи після display: none */
 @starting-style {
 
     .screen:not(.hidden) {
@@ -98,7 +95,6 @@ body.night-mode::before {
 
 .heart {
     user-select: none;
-    /* width: 200px; */
     width: min(200px, 50vw);
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
@@ -207,7 +203,6 @@ body.night-mode::before {
     cursor: pointer;
     font-size: 25px;
     filter: grayscale(100%) brightness(1.5);
-    /* filter: grayscale(100%) brightness(50%) contrast(150%); */
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
 
@@ -340,7 +335,6 @@ body.night-mode::before {
 }
 
 .wish24-card.show {
-    /* display: block; */
     transform: translateY(0);
     opacity: 1;
 }
@@ -424,12 +418,46 @@ body.night-mode::before {
     align-items: center;
     gap: 15px;
     padding: 10px;
-    /* background: rgba(255, 255, 255, 0.2); */
     background: rgb(255 255 255 / 24%);
     box-shadow: 11px -1px 13px 0px #bebebe17;
     border-radius: 20px;
     backdrop-filter: blur(5px);
     margin-bottom: 20px;
+}
+
+#playPauseBtn,
+#restartMusicBtn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Самі SVG іконки стають білими */
+#playPauseBtn img,
+#restartMusicBtn img {
+    width: 28px;
+    height: 28px;
+    display: block;
+    filter: invert(100%) brightness(200%);
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+#playPauseBtn:hover img,
+#restartMusicBtn:hover img {
+    filter: invert(100%) brightness(100%);
+    opacity: 0.8;
+}
+
+#playPauseBtn:active,
+#restartMusicBtn:active {
+    transform: scale(0.85);
 }
 
 .music-btn {
@@ -450,7 +478,6 @@ body.night-mode::before {
 }
 
 .music-btn:active {
-    /* background: rgb(52, 52, 52); */
     color: black;
 }
 
@@ -626,7 +653,6 @@ body.night-mode::before {
 .falling-word {
     position: absolute;
     top: 168px;
-    /* Поява прямо під хмаркою */
     font-size: 22px;
     color: rgba(255, 255, 255, 0.702);
     white-space: nowrap;
@@ -647,7 +673,6 @@ body.night-mode::before {
 
     100% {
         transform: translateY(150px);
-        /* Відстань падіння */
         opacity: 0;
     }
 }

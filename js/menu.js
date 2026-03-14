@@ -33,19 +33,15 @@ export function initMenu() {
     let wordIndex = 0;
 
     cloudWrapper.addEventListener('click', () => {
-        // 1. Створюємо елемент слова
         const word = document.createElement('div');
         word.className = 'falling-word';
         
-        // Беремо слово по черзі
         word.innerText = phrases[wordIndex];
-        wordIndex = (wordIndex + 1) % phrases.length; // Повертаємося до початку після останнього слова
+        wordIndex = (wordIndex + 1) % phrases.length; 
 
-        // 2. Додаємо в контейнер
         // cloudBtn.parentElement.appendChild(word);
         cloudWrapper.after(word);
 
-        // 4. Видаляємо слово після завершення анімації
         setTimeout(() => {
             word.remove();
         }, 2000);

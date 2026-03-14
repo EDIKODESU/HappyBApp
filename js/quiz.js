@@ -4,9 +4,6 @@ import { menu, quizScreen, quizBtn, twfrBtn, cloudWrapper, cloudBtn  } from "./v
 
 
 export function initQuiz(){
-
-    // const quizScreen = document.getElementById("quiz");
-    // const quizBtn = document.getElementById("quizBtn");
     const quizBack = document.getElementById("quizBack");
 
     const questionEl = document.getElementById("question");
@@ -79,10 +76,8 @@ export function initQuiz(){
         nextBtn.textContent = "Далі";
         resultEl.textContent = "";
 
-        // Видаляємо відрендерену картку побажань
         deleteRenderWishesCard();
         
-        // Видаляємо кнопку "Повернутися", якщо вона існує
         const existingBtn = quizScreen.querySelector(".lastWishBtn");
         if (existingBtn) existingBtn.remove();
 

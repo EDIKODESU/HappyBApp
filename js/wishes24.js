@@ -4,14 +4,11 @@ import { menu, wishes24Screen, twfrBtn, sheBtn, moonBtn  } from "./valueScreen.j
 
 export function initWishes24(){
 
-    // const wishes24Screen = document.getElementById("wishes24Screen");
-    const wishes24Title = wishes24Screen.querySelector(".wishes24-title"); // Беремо заголовок
+    const wishes24Title = wishes24Screen.querySelector(".wishes24-title"); 
     const wishes24Back = document.getElementById("wishes24Back");
     const wishNumberEl = document.getElementById("wishNumber");
     const wishTextEl = document.getElementById("wishText");
     const wishNextBtn = document.getElementById("wishNextBtn");
-    // const wishCardContainer = document.getElementById("wishCardContainer");
-    // const twfrBtn = document.getElementById("btn24");
 
     const wishes24 = [
         "Будь щасливою ❤️",
