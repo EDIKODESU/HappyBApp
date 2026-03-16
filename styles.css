@@ -50,6 +50,7 @@ body.night-mode::before {
     justify-content: center;
     align-items: center;
     position: relative;
+    touch-action: manipulation;
 }
 
 /* Екрани */
@@ -164,6 +165,7 @@ body.night-mode::before {
     color: white;
     font-size: 16px;
     transition: all 0.4s ease;
+    touch-action: manipulation;
 }
 
 .menu-btn:active, .quiz-answers button:active, .lastWishBtn:active {
@@ -204,12 +206,14 @@ body.night-mode::before {
     font-weight: bold;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
     /* transition: 0.2s ease; */
 }
 
 .back:active { color: #000000; }
 
-#moonBtn, #sunBtn {
+#moonBtn,
+#sunBtn {
     z-index: 10;
     position: absolute;
     top: 15px;
@@ -219,10 +223,13 @@ body.night-mode::before {
     cursor: pointer;
     font-size: 25px;
     filter: grayscale(100%) brightness(1.5);
-    -webkit-user-select: none;
-    -webkit-tap-highlight-color: transparent;
 
-    transition: all 0.2s ease;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+
+    transition: opacity 0.2s ease;
 }
 
 #moonBtn {
@@ -234,14 +241,25 @@ body.night-mode::before {
     content: '';
     position: absolute;
     top: -15px;
+    /* Відповідає top кнопки */
     right: -20px;
+    /* Відповідає right кнопки */
     width: 80px;
     height: 80px;
     border-bottom-left-radius: 100%;
     z-index: -1;
     pointer-events: none;
-    /* transition: all 0.2s ease; */
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), all 0.3s;
+
+    /* ТРАНСФОРМАЦІЯ З КУТА */
+    transform-origin: top right;
+    will-change: transform;
+    /* Готує відеокарту до анімації */
+
+    transition-property: transform, background-color;
+    transition-duration: 0.3s, 0.3s;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275), ease;
+    
+    will-change: transform, background-color;
 }
 
 #moonBtn::before {
@@ -280,6 +298,7 @@ body.night-mode::before {
 }
 
 .quiz-answers button, .lastWishBtn {
+    touch-action: manipulation;
     user-select: none;
     -webkit-user-select: none;
     width: 100%;
