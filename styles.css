@@ -179,6 +179,8 @@ body.night-mode::before {
 
 #img-bth {
     position: absolute;
+    background: transparent;
+    width: 150px;
     bottom: -15px;
     left: 50%;
     transform: translateX(-50%);
