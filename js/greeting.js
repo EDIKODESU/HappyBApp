@@ -5,6 +5,7 @@ import { createRain } from "./rain.js"
 export function initGreeting() {
     const greetingBack = document.getElementById("greetingBack");
     const thanksBtn = document.getElementById("thanksBtn");
+    const imgBth = document.getElementById("img-bth");
     const textContainer = document.getElementById("finalGreetingText");
     const rainBg = greetingScreen.querySelector(".rain-bg");
 
@@ -74,5 +75,9 @@ export function initGreeting() {
     };
 
     greetingBack.onclick = goBack;
-    thanksBtn.onclick = goBack;
+
+    thanksBtn.onclick = () => {
+        imgBth.style.opacity = 1;
+        goBack();
+    }
 }

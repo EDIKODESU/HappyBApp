@@ -96,12 +96,12 @@ export function initSheCards() {
             isDragging = false;
 
             // Поріг свайпу 100 пікселів
-            if (Math.abs(currentX) > 100) {
+            if (Math.abs(currentX) > 80) {
                 const dir = currentX > 0 ? "right" : "left";
                 removeCard(card, dir);
             } else {
                 // Повернення картки
-                card.style.transition = "transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+                card.style.transition = "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
                 card.style.transform = `rotate(${Math.random() * 4 - 2}deg)`;
             }
             currentX = 0;
@@ -117,7 +117,7 @@ export function initSheCards() {
 
     function removeCard(card, dir) {
         // Уповільнили виліт картки до 0.8с
-        card.style.transition = "transform 0.6s ease-in, opacity 0.6s ease"; 
+        card.style.transition = "transform 0.4s ease-in, opacity 0.6s ease"; 
         const moveOut = dir === "right" ? 1000 : -1000;
         card.style.transform = `translateX(${moveOut}px) rotate(${dir === "right" ? 35 : -35}deg)`;
         card.style.opacity = "0";
